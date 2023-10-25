@@ -10,6 +10,10 @@ class Nodo{
     int deposito1,deposito2,deposito3,deposito4,deposito5;
     Nodo *sgte;
     public:
+    Nodo(){
+        sgte=nullptr;
+    }
+
     string getCodigo(){
         return codigo;
     }
@@ -34,6 +38,16 @@ class Nodo{
     int getDepositoTotal(){
         return deposito1+deposito2+deposito3+deposito4+deposito5;
     }
+    Nodo *getSiguiente(){
+        return sgte;
+    }
+
+    void setSiguiente(Nodo *siguiente){
+        this->sgte = siguiente;
+    }
     
+    void setDatos(string _codigo,string articulo,int deposito1,int deposito2,int deposito3,int deposito4,int deposito5){
+
+    }
 };
 #endif NODO_H
