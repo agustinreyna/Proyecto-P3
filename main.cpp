@@ -16,7 +16,6 @@ struct stockArticulo
     std::string codigo, nombre, grupo;
 };
 
-
 using namespace std;
 
 int main()
@@ -81,15 +80,15 @@ int main()
 
         totalarticulos += articulo.deposito1 + articulo.deposito2 + articulo.deposito3 + articulo.deposito4 + articulo.deposito5;
         totalarticulosdiferentes++;
-        cout<<totalarticulosdiferentes<<endl;
+
         inventario.insert(make_pair(nombre, articulo));
         inventarioStock.insert(make_pair(depositos,stocks));
     }
 
-    for (auto pair : inventarioStock)
+    for (auto pair : inventario)
     {
         cout << "-----------------------------" << endl;
-        cout << pair.second.nombre << endl;
+        cout << pair.first << endl;
     }
     cout << "-----------------------------" << endl;
     cout << "Total de articulos: " << totalarticulos << endl;
