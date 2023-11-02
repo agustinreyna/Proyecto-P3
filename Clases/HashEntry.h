@@ -1,11 +1,12 @@
 #ifndef U05_HASH_HASHMAP_HASHENTRY_H_
 #define U05_HASH_HASHMAP_HASHENTRY_H_
+#include "Lista.h"
 using namespace std;
 
 struct Articulo
 {
     string codigo,grupo;
-    int deposito;
+    Lista deposito;
 };
 
 template <class K, class T>
@@ -34,8 +35,8 @@ public:
         return valor.grupo;
     }
 
-    int getDeposito(){
-        return valor.deposito;
+    int getDeposito(int pos){
+        return valor.deposito.getDato(pos); 
     }
 
     void setCodigo(string v) {
@@ -46,8 +47,12 @@ public:
         valor.grupo = v;
     }
 
+    void imprimirDepositos(){
+        valor.deposito.imprimir();
+    }
+
     void setDeposito(int v) {
-        valor.deposito=v;
+        valor.deposito.insertarUltimo(v);
     }
 
     HashEntry<K, T>* getNext() {

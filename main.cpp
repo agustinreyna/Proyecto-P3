@@ -6,8 +6,6 @@
 #include "Clases/HashMap.h"
 using namespace std;
 
-
-
 unsigned int hashFunc(string clave)
 {
     unsigned int hash = 0;
@@ -41,12 +39,13 @@ int main()
         num = stoi(stringNum);
         }
         else num = 0;
-        articulo.deposito=num;
+        cout<<"puto: "<<num<<endl;
+        articulo.deposito.insertarUltimo(num);
         
         totalarticulosdiferentes++;
 
         tabla.put(nombre,articulo);
-        
+        articulo.deposito.vaciar();
     }
 
     tabla.print();

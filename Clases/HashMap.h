@@ -132,7 +132,7 @@ void HashMap<K, T>::print()
 
   for (int i = 0; i < tamanio; i++)
   {
-    std::cout << "<---------->" <<i << "<---------->" << endl;
+    std::cout << "<---------->" <<i<< "<---------->" << endl;
     std::cout<<endl;
     HashEntry<K, T>* current = tabla[i];
 
@@ -141,7 +141,8 @@ void HashMap<K, T>::print()
       std::cout << current->getClave() << "<->";
       std::cout << current->getCodigo() << "<->";
       std::cout << current->getGrupo() << "<->";
-      std::cout << current->getDeposito() << std::endl;
+      current->imprimirDepositos();
+      std::cout <<endl;
       if(current->getNext()==nullptr)std::cout<<endl;
       current = current->getNext(); // Avanza al siguiente elemento en la lista enlazada, si existe
 
