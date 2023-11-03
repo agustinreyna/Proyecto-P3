@@ -18,7 +18,7 @@ unsigned int hashFunc(string clave)
 
 int main()
 {   
-    HashMap<string,Articulo> tabla(200,hashFunc);
+    HashMap<string,Articulo> tabla(50,hashFunc);
     //map<string, Articulo> inventario;
 
     string nombre,line,stringNum;
@@ -39,17 +39,50 @@ int main()
         num = stoi(stringNum);
         }
         else num = 0;
-        cout<<"puto: "<<num<<endl;
-        articulo.deposito.insertarUltimo(num);
-        
+        cout<<"Se guardo: "<<num<<endl;
+        articulo.deposito->insertarUltimo(num);
+
+        getline(ss, stringNum, ',');
+        if (!stringNum.empty()) {
+        num = stoi(stringNum);
+        }
+        else num = 0;
+        cout<<"Se guardo: "<<num<<endl;
+        articulo.deposito->insertarUltimo(num);
+
+        getline(ss, stringNum, ',');
+        if (!stringNum.empty()) {
+        num = stoi(stringNum);
+        }
+        else num = 0;
+        cout<<"Se guardo: "<<num<<endl;
+        articulo.deposito->insertarUltimo(num);
+
+        getline(ss, stringNum, ',');
+        if (!stringNum.empty()) {
+        num = stoi(stringNum);
+        }
+        else num = 0;
+        cout<<"Se guardo: "<<num<<endl;
+        articulo.deposito->insertarUltimo(num);
+
+        getline(ss, stringNum, '\n');
+        if (!stringNum.empty()) {
+        num = stoi(stringNum);
+        }
+        else num = 0;
+        cout<<"Se guardo: "<<num<<endl;
+        articulo.deposito->insertarUltimo(num);
+
         totalarticulosdiferentes++;
 
         tabla.put(nombre,articulo);
-        articulo.deposito.vaciar();
+        //articulo.deposito.vaciar();
     }
 
     tabla.print();
-    
+    cout << "Total de articulos diferentes: " << totalarticulosdiferentes << endl;
+
     return 0;
 }
 
@@ -87,4 +120,4 @@ int main()
     }
     cout << "-----------------------------" << endl;
     cout << "Total de articulos: " << totalarticulos << endl;
-    cout << "Total de articulos diferentes: " << totalarticulosdiferentes << endl;*/
+    */

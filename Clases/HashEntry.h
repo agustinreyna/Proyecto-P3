@@ -6,7 +6,7 @@ using namespace std;
 struct Articulo
 {
     string codigo,grupo;
-    Lista deposito;
+    Lista *deposito;
 };
 
 template <class K, class T>
@@ -36,7 +36,7 @@ public:
     }
 
     int getDeposito(int pos){
-        return valor.deposito.getDato(pos); 
+        return valor.deposito->getDato(pos); 
     }
 
     void setCodigo(string v) {
@@ -48,11 +48,17 @@ public:
     }
 
     void imprimirDepositos(){
-        valor.deposito.imprimir();
+        //valor.deposito.imprimir();
+        if (!valor.deposito->esVacia()) {
+    cout << valor.deposito->getDato(0);
+    } else {
+    cout << "El depósito está vacío.";
+}
+
     }
 
     void setDeposito(int v) {
-        valor.deposito.insertarUltimo(v);
+        valor.deposito->insertarUltimo(v);
     }
 
     HashEntry<K, T>* getNext() {
