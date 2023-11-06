@@ -98,16 +98,13 @@ void Lista::insertarUltimo(int dato)
     Nodo *aux = inicio;
     Nodo *nuevo = new Nodo;
     nuevo->setDato(dato);
-    cout<<"unoo"<<endl;
     if (aux == nullptr)
     { // CASO EN EL QUE LA LISTA ESTE VACIA
-    cout<<"unoo"<<endl;
         nuevo->setSiguiente(inicio);
         inicio = nuevo;
         cout<<"Se inserto "<<dato<<endl;
         return;
     }
-    cout<<"unooAAAA"<<endl;
     while (aux->getSiguiente() != nullptr)
     { // EL SIGUIENTE DEL AUXILIAR TIENE QUE SER SI O SI NULL
         aux = aux->getSiguiente();

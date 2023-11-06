@@ -7,7 +7,9 @@ template <class K, class T>
 class HashMap
 {
 private:
+
   HashEntry<K, T> **tabla;
+  
   unsigned int tamanio;
 
   static unsigned int hashFunc(K clave);
@@ -19,7 +21,9 @@ public:
 
   HashMap(unsigned int k, unsigned int (*hashFuncP)(K clave));
 
-  T get(K clave);
+  void get(K clave);
+
+  int getDeposito(K clave,int pos);
 
   void put(K clave, T valor);
 
@@ -31,7 +35,9 @@ public:
 
   void print();
 
-  K* tosorted();
+  string* tosorted(int pos);
+
+  string* tosortedMayor(int pos);
 };
 
 template <class K, class T>
@@ -71,19 +77,33 @@ HashMap<K, T>::~HashMap()
 }
 
 template <class K, class T>
-T HashMap<K, T>::get(K clave)
+void HashMap<K, T>::get(K clave)
 {
   unsigned int pos = hashFuncP(clave) % tamanio;
+  HashEntry<K, T>* current = tabla[pos];
   if (tabla[pos] == NULL)
   {
     throw 404;
   }
-  if(tabla[pos]->getClave() == clave){
-    return tabla[pos]->getValor();
-  }else{
-    throw 409;
-  }
+  while(current->getClave()!=clave)current=current->getNext();
+
+  cout << current->getClave() << "<->";
+  cout << current->getCodigo() << "<->";
+  cout << current->getGrupo() << "<->";
+  current->imprimirDepositos();
+  cout<<endl;
 }
+
+template <class K, class T>
+int HashMap<K, T>::getDeposito(K clave,int dep)
+{
+  
+  unsigned int pos = hashFuncP(clave) % tamanio;
+  HashEntry<K, T>* current = tabla[pos];
+  while(current->getClave()!=clave)current=current->getNext();
+  return current->getDeposito(dep);
+}
+
 
 template <class K, class T>
 void HashMap<K, T>::put(K clave, T valor)
@@ -142,6 +162,7 @@ void HashMap<K, T>::print()
       std::cout << current->getCodigo() << "<->";
       std::cout << current->getGrupo() << "<->";
       current->imprimirDepositos();
+      
       std::cout <<endl;
       if(current->getNext()==nullptr)std::cout<<endl;
       current = current->getNext(); // Avanza al siguiente elemento en la lista enlazada, si existe
@@ -152,35 +173,66 @@ void HashMap<K, T>::print()
 }
 
 template <class K, class T>
-K* HashMap<K, T>::tosorted(){
+string* HashMap<K, T>::tosorted(int pos){
 
-    K* array = new K[tamanio];
-    T* values = new T[tamanio];
+    string* array = new string[tamanio];
+    int* values = new int[tamanio];
     int index = 0;
     for(int i = 0; i < tamanio; i++){
-        if(tabla[i] != NULL){
-            array[index] = tabla[i]->getClave();
-            values[index] = tabla[i]->getValor();
-            index++;
+      HashEntry<K, T>* current = tabla[i];
+        while(current!=nullptr){
+          array[index] = current->getClave();
+          values[index] = current->getDeposito(pos);
+          index++;
+          current = current->getNext();
         }
     }
 
     for(int i = 0; i < index; i++){
         for(int j = 0; j < index; j++){
             if(values[i] < values[j]){
-                T temp = values[i];
+                int temp = values[i];
                 values[i] = values[j];
                 values[j] = temp;
 
-                K temp2 = array[i];
+                string temp2 = array[i];
                 array[i] = array[j];
                 array[j] = temp2;
             }
         }
     }
-
   return array;
 }
 
+template <class K, class T>
+string* HashMap<K, T>::tosortedMayor(int pos){
 
+    string* array = new string[tamanio];
+    int* values = new int[tamanio];
+    int index = 0;
+    for(int i = 0; i < tamanio; i++){
+      HashEntry<K, T>* current = tabla[i];
+        while(current!=nullptr){
+          array[index] = current->getClave();
+          values[index] = current->getDeposito(pos);
+          index++;
+          current = current->getNext();
+        }
+    }
+
+    for(int i = 0; i < index; i++){
+        for(int j = 0; j < index; j++){
+            if(values[i] > values[j]){
+                int temp = values[i];
+                values[i] = values[j];
+                values[j] = temp;
+
+                string temp2 = array[i];
+                array[i] = array[j];
+                array[j] = temp2;
+            }
+        }
+    }
+  return array;
+}
 #endif // U05_HASH_HASHMAP_HASHMAP_H_

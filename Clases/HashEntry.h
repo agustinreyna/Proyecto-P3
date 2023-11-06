@@ -1,12 +1,13 @@
 #ifndef U05_HASH_HASHMAP_HASHENTRY_H_
 #define U05_HASH_HASHMAP_HASHENTRY_H_
 #include "Lista.h"
+#include <vector>
 using namespace std;
 
 struct Articulo
 {
     string codigo,grupo;
-    Lista *deposito;
+    vector<int> deposito;
 };
 
 template <class K, class T>
@@ -36,7 +37,7 @@ public:
     }
 
     int getDeposito(int pos){
-        return valor.deposito->getDato(pos); 
+        return valor.deposito[pos]; 
     }
 
     void setCodigo(string v) {
@@ -48,17 +49,15 @@ public:
     }
 
     void imprimirDepositos(){
-        //valor.deposito.imprimir();
-        if (!valor.deposito->esVacia()) {
-    cout << valor.deposito->getDato(0);
-    } else {
-    cout << "El depósito está vacío.";
-}
+    
+    if (!valor.deposito.empty()) {
+    int tam = valor.deposito.size();
 
+    for(int i=0;i<tam;i++){
+        cout<<"Deposito "<<i<<" :"<<valor.deposito[i]<<"->";
     }
-
-    void setDeposito(int v) {
-        valor.deposito->insertarUltimo(v);
+        cout<<"Vacio";
+    }
     }
 
     HashEntry<K, T>* getNext() {

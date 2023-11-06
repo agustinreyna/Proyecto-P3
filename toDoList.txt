@@ -1,1 +1,0 @@
-1- pensar cual estructura de datos es la adecuada para cada uno de los 7 metodos que pide el proyecto
