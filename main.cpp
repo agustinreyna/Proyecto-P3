@@ -22,11 +22,11 @@ void menu(){
     cout<<"Opcion 1: Imprimir hashmap"<<endl;
     cout<<"Opcion 2: Ver cantidad total de articulos diferentes"<<endl;
     cout<<"Opcion 3: Ver cantidad de total de articulos"<<endl;
-    cout<<"Opcion 4: Ver listado de artículos con cantidad n o menos de stock"<<endl;
-    cout<<"Opcion 5: Ver listado de artículos con cantidad n o menos de stock según un depósito"<<endl;
+    cout<<"Opcion 4: Ver listado de articulos con cantidad n o menos de stock"<<endl;
+    cout<<"Opcion 5: Ver listado de articulos con cantidad n o menos de stock segun un deposito"<<endl;
     cout<<"Opcion 6: Ver el stock total de cierto articulo"<<endl;
-    cout<<"Opcion 7: Ver el stock de cierto artículo en un depósito"<<endl;
-    cout<<"Opcion 8: Ver el listado de aquellos artículos cuyo stock es igual o supera el número n"<<endl;
+    cout<<"Opcion 7: Ver el stock de cierto articulo en un deposito"<<endl;
+    cout<<"Opcion 8: Ver el listado de aquellos articulos cuyo stock es igual o supera el numero n"<<endl;
 }
 
 int main()
@@ -34,7 +34,7 @@ int main()
     HashMap<string,Articulo> tabla(300,hashFunc);
     //map<string, Articulo> inventario;
     
-    string nombre,line,stringNum;
+    string nombre,line,stringNum,grupoViejo;
     char clave[100];
     int k,n,pos,index,totalarticulos = 0, totalarticulosdiferentes = 0,num,depositoTotal=0;
     Articulo articulo;
@@ -46,7 +46,11 @@ int main()
         stringstream ss(line);
 
         // Usamos getline con ',' como delimitador para obtener cada campo
-        getline(ss, articulo.grupo, ',');
+        getline(ss,articulo.grupo, ',');
+        if (!articulo.grupo.empty()) {
+        grupoViejo=articulo.grupo;
+        }
+        else articulo.grupo=grupoViejo;
         getline(ss, articulo.codigo, ',');
         getline(ss, nombre, ',');
         getline(ss, stringNum, ',');
@@ -106,7 +110,11 @@ int main()
         switch (k)
         {
         case 1:
-            tabla.print();
+            tabla.printPrimeraMitad();
+            cout<<"Pone 1 si queres imprimir la otra mitad"<<endl;
+            cin>>n;
+            system("cls");
+            if(n==1)tabla.printSegundaMitad();
             break;
         
         case 2:
@@ -120,7 +128,7 @@ int main()
         case 4:
             cout<<"Decime cuanto es el minimo de stock :";
             cin>>n;
-            arrayOrdenado=tabla.tosorted(0);
+            arrayOrdenado=tabla.ordenarMenor(0);
             index=0;
             while(tabla.getDeposito(arrayOrdenado[index],0)<=n){
             tabla.get(arrayOrdenado[index]);
@@ -134,7 +142,7 @@ int main()
             cin>>n;
             cout<<"Decime en cual deposito(1,2,3,4,n) :";
             cin>>pos;
-            arrayOrdenado=tabla.tosorted(pos);
+            arrayOrdenado=tabla.ordenarMenor(pos);
             index=0;
             while(tabla.getDeposito(arrayOrdenado[index],pos)<=n){
             tabla.get(arrayOrdenado[index]);
@@ -162,9 +170,9 @@ int main()
             break;
         
         case 8:
-            cout<<"Decime cuanto es el minimo de stock :";
+            cout<<"Decime cuanto es el maximo de stock :";
             cin>>n;
-            arrayOrdenado=tabla.tosortedMayor(0);
+            arrayOrdenado=tabla.ordenarMayor(0);
             index=0;
             while(tabla.getDeposito(arrayOrdenado[index],0)>=n){
             tabla.get(arrayOrdenado[index]);

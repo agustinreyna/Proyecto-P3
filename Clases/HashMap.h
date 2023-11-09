@@ -33,11 +33,13 @@ public:
 
   bool esVacio();
 
-  void print();
+  void printPrimeraMitad();
 
-  string* tosorted(int pos);
+  void printSegundaMitad();
 
-  string* tosortedMayor(int pos);
+  string* ordenarMenor(int pos);
+
+  string* ordenarMayor(int pos);
 };
 
 template <class K, class T>
@@ -113,7 +115,7 @@ void HashMap<K, T>::put(K clave, T valor)
   if (tabla[pos] == NULL) {
     tabla[pos] = new HashEntry<K, T>(clave, valor);
   } else {
-    // Manejo de colisión: Agregar a la lista enlazada en esa posición
+    
     HashEntry<K, T>* current = tabla[pos];
     while (current->getNext() != NULL) {
       current = current->getNext();
@@ -145,26 +147,26 @@ unsigned int HashMap<K, T>::hashFunc(K clave)
 }
 
 template <class K, class T>
-void HashMap<K, T>::print()
+void HashMap<K, T>::printPrimeraMitad()
 {
-  std::cout << "i" << " " << "Clave" << "\t\t" << "Valor" << std::endl;
-  std::cout << "--------------------" << std::endl;
-
-  for (int i = 0; i < tamanio; i++)
+  cout << "i" << " " << "Clave" << "\t\t" << "Valor" << endl;
+  cout << "--------------------" << endl;
+  
+  for (int i=0; i < 150; i++)
   {
-    std::cout << "<---------->" <<i<< "<---------->" << endl;
-    std::cout<<endl;
+    cout << "<---------->" <<i<< "<---------->" << endl;
+    cout<<endl;
     HashEntry<K, T>* current = tabla[i];
 
     while (current != nullptr)
     {
-      std::cout << current->getClave() << "<->";
-      std::cout << current->getCodigo() << "<->";
-      std::cout << current->getGrupo() << "<->";
+      cout << current->getClave() << "<->";
+      cout << current->getCodigo() << "<->";
+      cout << current->getGrupo() << "<->";
       current->imprimirDepositos();
       
-      std::cout <<endl;
-      if(current->getNext()==nullptr)std::cout<<endl;
+      cout <<endl;
+      if(current->getNext()==nullptr)cout<<endl;
       current = current->getNext(); // Avanza al siguiente elemento en la lista enlazada, si existe
 
       
@@ -173,7 +175,35 @@ void HashMap<K, T>::print()
 }
 
 template <class K, class T>
-string* HashMap<K, T>::tosorted(int pos){
+void HashMap<K, T>::printSegundaMitad()
+{
+  cout << "i" << " " << "Clave" << "\t\t" << "Valor" << endl;
+  cout << "--------------------" << endl;
+  
+  for (int i=150; i < 300; i++)
+  {
+    cout << "<---------->" <<i<< "<---------->" << endl;
+    cout<<endl;
+    HashEntry<K, T>* current = tabla[i];
+
+    while (current != nullptr)
+    {
+      cout << current->getClave() << "<->";
+      cout << current->getCodigo() << "<->";
+      cout << current->getGrupo() << "<->";
+      current->imprimirDepositos();
+      
+      cout <<endl;
+      if(current->getNext()==nullptr)cout<<endl;
+      current = current->getNext(); // Avanza al siguiente elemento en la lista enlazada, si existe
+
+      
+    }
+   }
+}
+
+template <class K, class T>
+string* HashMap<K, T>::ordenarMenor(int pos){
 
     string* array = new string[tamanio];
     int* values = new int[tamanio];
@@ -205,7 +235,7 @@ string* HashMap<K, T>::tosorted(int pos){
 }
 
 template <class K, class T>
-string* HashMap<K, T>::tosortedMayor(int pos){
+string* HashMap<K, T>::ordenarMayor(int pos){
 
     string* array = new string[tamanio];
     int* values = new int[tamanio];

@@ -54,7 +54,8 @@ public:
     int tam = valor.deposito.size();
 
     for(int i=0;i<tam;i++){
-        cout<<"Deposito "<<i<<" :"<<valor.deposito[i]<<"->";
+        if(i==0)cout<<"Deposito Total "<<" :"<<valor.deposito[i]<<"->";
+        else cout<<"Deposito "<<i<<" :"<<valor.deposito[i]<<"->";
     }
         cout<<"Vacio";
     }
