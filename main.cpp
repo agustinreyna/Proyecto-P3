@@ -15,8 +15,6 @@ unsigned int hashFunc(string clave)
     }
     return hash;
 }
-//g++ main.cpp -o main
-//./main -file csv.csv
 
 int main(int argc, char *argv[])
 {   
@@ -24,7 +22,6 @@ int main(int argc, char *argv[])
     cout << "Comenzando a medir Tiempo...\n" << endl;
     begin = clock();
     HashMap<string,Articulo> tabla(300,hashFunc);
-    //map<string, Articulo> inventario;
     
     string nombre,line,stringNum,grupoViejo;
     char clave[100];
