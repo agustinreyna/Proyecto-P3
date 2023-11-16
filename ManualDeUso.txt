@@ -1,0 +1,14 @@
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~MANUAL DE USO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        El programa se maneja mediante argumentos que se pasan por consola, aca van los comandos:
+
+    Para ver la primera mitad de articulos : ./main -file csv.csv -imprimirPrimeraMitad
+    Para ver la segunda mitad de articulos : ./main -file csv.csv -imprimirSegundaMitad
+    Para ver la cantidad total de articulos diferentes : ./main -file csv.csv -cantTotalArtDif
+    Para ver la cantidad total de articulos : ./main -file csv.csv -cantTotalArt
+    Para ver el listado de articulos bajo "n" cantidad de stock : ./main -file csv.csv -min_stock 
+    Para ver el listado de articulos bajo "n" cantidad de stock y cierto deposito : ./main -file csv.csv -min_stock_deposito
+    Para ver el stock total de cierto articulo : ./main -file csv.csv -stock_art
+    Para ver el stock total de cierto articulo en cierto deposito : ./main -file csv.csv -stock_art_dep
+    Para ver el listado de articulos mayores a "n" cantidad de stock : ./main -file csv.csv -max_stock 

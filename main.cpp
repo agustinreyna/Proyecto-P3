@@ -1,8 +1,8 @@
 #include <iostream>
-#include <string>
-#include <vector>
+#include <string.h>
 #include <fstream>
 #include <sstream>
+#include <ctime>
 #include "Clases/HashMap.h"
 using namespace std;
 
@@ -15,22 +15,14 @@ unsigned int hashFunc(string clave)
     }
     return hash;
 }
+//g++ main.cpp -o main
+//./main -file csv.csv
 
-void menu(){
-    cout<<"~~~~~~~~~~~~~~~~~~~~MENU~~~~~~~~~~~~~~~~~~~~"<<endl;
-    cout<<"Opcion 0: Salir del programa"<<endl;
-    cout<<"Opcion 1: Imprimir hashmap"<<endl;
-    cout<<"Opcion 2: Ver cantidad total de articulos diferentes"<<endl;
-    cout<<"Opcion 3: Ver cantidad de total de articulos"<<endl;
-    cout<<"Opcion 4: Ver listado de articulos con cantidad n o menos de stock"<<endl;
-    cout<<"Opcion 5: Ver listado de articulos con cantidad n o menos de stock segun un deposito"<<endl;
-    cout<<"Opcion 6: Ver el stock total de cierto articulo"<<endl;
-    cout<<"Opcion 7: Ver el stock de cierto articulo en un deposito"<<endl;
-    cout<<"Opcion 8: Ver el listado de aquellos articulos cuyo stock es igual o supera el numero n"<<endl;
-}
-
-int main()
+int main(int argc, char *argv[])
 {   
+    clock_t begin;
+    cout << "Comenzando a medir Tiempo...\n" << endl;
+    begin = clock();
     HashMap<string,Articulo> tabla(300,hashFunc);
     //map<string, Articulo> inventario;
     
@@ -102,89 +94,75 @@ int main()
         depositoTotal=0;
 
     }
+     clock_t end = clock();
+    double elapsed_secs = static_cast<double>(end - begin) / CLOCKS_PER_SEC;
+    cout << " * Tiempo de Ejecucion * " << endl;
+    cout << elapsed_secs << endl;
+    bool opcionEncontrada = false;
 
-    do{
-        menu();
-        cin>>k;
-        system("cls");
-        switch (k)
-        {
-        case 1:
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-imprimirPrimeraMitad") == 0) {
+            //cout << "\n Nombre del Archivo: " << argv[i + 1] << endl;
             tabla.printPrimeraMitad();
-            cout<<"Pone 1 si queres imprimir la otra mitad"<<endl;
-            cin>>n;
-            system("cls");
-            if(n==1)tabla.printSegundaMitad();
-            break;
-        
-        case 2:
+            opcionEncontrada = true;
+        } else if (strcmp(argv[i], "-imprimirSegundaMitad") == 0) {
+            tabla.printSegundaMitad();
+            opcionEncontrada = true;
+        } else if (strcmp(argv[i], "-cantTotalArtDif") == 0) {
             cout << "Total de articulos diferentes: " << totalarticulosdiferentes << endl;
-            break;
-        
-        case 3:
+            opcionEncontrada = true;
+        } else if (strcmp(argv[i], "-cantTotalArt") == 0) {
             cout << "Total de articulos : " << totalarticulos << endl;
-            break;
-        
-        case 4:
-            cout<<"Decime cuanto es el minimo de stock :";
-            cin>>n;
+            opcionEncontrada = true;
+        } else if (strcmp(argv[i], "-min_stock") == 0) {
+            int minStock;
+            stringstream(argv[i + 1]) >> minStock;
             arrayOrdenado=tabla.ordenarMenor(0);
             index=0;
-            while(tabla.getDeposito(arrayOrdenado[index],0)<=n){
+            while(tabla.getDeposito(arrayOrdenado[index],0)<=minStock){
             tabla.get(arrayOrdenado[index]);
             cout<<endl;
             index++;
             }
-            break;
-        
-        case 5:
-            cout<<"Decime cuanto es el minimo de stock :";
-            cin>>n;
-            cout<<"Decime en cual deposito(1,2,3,4,n) :";
-            cin>>pos;
-            arrayOrdenado=tabla.ordenarMenor(pos);
+            opcionEncontrada = true;
+        } else if (strcmp(argv[i], "-min_stock_deposito") == 0) {
+            int minStock, deposito;
+            stringstream(argv[i + 1]) >> minStock;
+            stringstream(argv[i + 2]) >> deposito;
+            arrayOrdenado=tabla.ordenarMenor(deposito);
             index=0;
-            while(tabla.getDeposito(arrayOrdenado[index],pos)<=n){
+            while(tabla.getDeposito(arrayOrdenado[index],deposito)<=minStock){
             tabla.get(arrayOrdenado[index]);
             cout<<endl;
             index++;
             }
-            break;
-        
-        case 6:
-            cout << "Decime el nombre del articulo: ";
-            cin.ignore();
-            cin.getline(clave, 100);
-            cout<<tabla.getDeposito(clave,0);
+            opcionEncontrada = true;
+        } else if (strcmp(argv[i], "-stock_art") == 0) {
+            cout<<tabla.getDeposito(argv[i + 1],0);
             cout<<endl;
-            break;
-        
-        case 7:
-            cout << "Decime el nombre del articulo: ";
-            cin.ignore();
-            cin.getline(clave, 100);
-            cout<<"Decime el deposito: ";
-            cin>>pos;
-            cout<<tabla.getDeposito(clave,pos);
+            opcionEncontrada = true;
+        } else if (strcmp(argv[i], "-stock_art_dep") == 0) {
+            int deposito;
+            stringstream(argv[i + 2]) >> deposito;
+            cout<<tabla.getDeposito(argv[i + 1],deposito);
             cout<<endl;
-            break;
-        
-        case 8:
-            cout<<"Decime cuanto es el maximo de stock :";
-            cin>>n;
+            opcionEncontrada = true;
+        } else if (strcmp(argv[i], "-max_stock") == 0) {
+            int maxStock;
+            stringstream(argv[i + 1]) >> maxStock;
             arrayOrdenado=tabla.ordenarMayor(0);
             index=0;
-            while(tabla.getDeposito(arrayOrdenado[index],0)>=n){
+            while(tabla.getDeposito(arrayOrdenado[index],0)>=maxStock){
             tabla.get(arrayOrdenado[index]);
             cout<<endl;
             index++;
             }
-            break;
-        
-        default:
-            break;
+            opcionEncontrada = true;
         }
-    }while(k!=0);    
-
+    }
+    if (!opcionEncontrada) {
+        cout << "ARGUMENTO NO VALIDO" << endl;
+    }
+    
     return 0;
 }

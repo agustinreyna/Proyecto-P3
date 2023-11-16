@@ -1,6 +1,5 @@
 #ifndef U05_HASH_HASHMAP_HASHENTRY_H_
 #define U05_HASH_HASHMAP_HASHENTRY_H_
-#include "Lista.h"
 #include <vector>
 using namespace std;
 
